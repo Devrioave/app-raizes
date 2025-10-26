@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:raizes/app/components/youtube_player_container.dart';
 
 class VideosController extends GetxController {
-  // Lista de vídeos disponíveis (placeholder para conteúdo futuro)
+  // Lista de vídeos disponíveis
   final RxList<VideoItem> videos = <VideoItem>[].obs;
 
   @override
@@ -11,12 +13,12 @@ class VideosController extends GetxController {
   }
 
   void _loadVideos() {
-    // Placeholder para quando os vídeos estiverem disponíveis
     videos.value = [
       VideoItem(
         title: "Filme Produto",
         description: "Conheça todos os detalhes do Empreendimento Raízes",
-        isAvailable: false,
+        isAvailable: true,
+        videoUrl: 'https://www.youtube.com/watch?v=xywfgKlpX4o',
       ),
       VideoItem(
         title: "Tour Virtual Apple Vision",
@@ -25,10 +27,46 @@ class VideosController extends GetxController {
       ),
       VideoItem(
         title: "Sala Imersiva",
-        description: "Ambiente virtual interativo do projeto",
+        description: "Ambiente interativo do projeto",
         isAvailable: false,
       ),
     ];
+  }
+
+  void playVideo(BuildContext context, VideoItem video) {
+    if (video.isAvailable && video.videoUrl != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Scaffold(
+            backgroundColor: Colors.black,
+            body: Stack(
+              children: [
+                Center(
+                  child: YoutubeVideoPlayerContainer(
+                    url: video.videoUrl!,
+                  ),
+                ),
+                Positioned(
+                  top: 40,
+                  right: 16,
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white, size: 32),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      Get.snackbar(
+        'Em breve',
+        'Este vídeo estará disponível em breve',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }
 

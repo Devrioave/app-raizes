@@ -18,7 +18,7 @@ class RaizesDrawer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16),
               child: Text(
-                "Raízes",
+                "Opções",
                                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
@@ -38,7 +38,7 @@ class RaizesDrawer extends StatelessWidget {
               onTap: () {
                 Get.offNamed(Routes.LOCALIZACAO);
               },
-              icon: Icons.location_pin,
+              icon: Icons.location_on,
               title: "LOCALIZAÇÃO",
               subtitle: "Centro do Recife • Conexão com a história",
             ),
@@ -54,23 +54,23 @@ class RaizesDrawer extends StatelessWidget {
               onTap: () {
                 Get.offNamed(Routes.PLANTAS);
               },
-              icon: Icons.emoji_transportation,
+              icon: Icons.straighten,
               title: "PLANTAS",
-              subtitle: "5 torres • Tipologias de 48m² a 177m²",
+              subtitle: "5 torres • Tipologias de 55 m² a 196 m²",
             ),
             DrawerTile(
               onTap: () {
                 Get.offNamed(Routes.VIDEOS);
               },
-              icon: Icons.play_circle_filled,
+              icon: Icons.play_arrow,
               title: "VÍDEOS",
-              subtitle: "Filme produto • Tour virtual • Sala imersiva",
+              subtitle: "Conheça o produto",
             ),
             DrawerTile(
               onTap: () {
                 Get.offNamed(Routes.TABELA_DE_VENDAS);
               },
-              icon: Icons.table_chart,
+              icon: Icons.attach_money,
               title: "TABELA DE VENDAS",
               subtitle: "Valores e condições atualizados mensalmente",
             ),
@@ -78,7 +78,7 @@ class RaizesDrawer extends StatelessWidget {
               onTap: () {
                 Get.offNamed(Routes.INFORMACOES_GERAIS);
               },
-              icon: Icons.settings,
+              icon: Icons.info,
               title: "INFORMAÇÕES GERAIS",
               subtitle: "Onde grandes talentos se encontram",
             ),
@@ -86,7 +86,7 @@ class RaizesDrawer extends StatelessWidget {
               onTap: () {
                 Get.offNamed(Routes.TECNOLOGIA);
               },
-              icon: Icons.flash_on_rounded,
+              icon: Icons.lightbulb_outline,
               title: "INOVAÇÃO E TECNOLOGIA",
               subtitle: "Segurança • Sustentabilidade • Tecnologia",
             ),

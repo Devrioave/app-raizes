@@ -12,140 +12,146 @@ class LocalizacaoView extends GetView<LocalizacaoController> {
 
   @override
   Widget build(BuildContext context) {
+    final mapHeight = MediaQuery.of(context).size.height * 0.32;
+
     return RaizesScaffold(
       title: const Text('Localização'),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                SizedBox(
-                  height: 400,
-                  width: double.infinity,
-                  child: InteractiveViewer(
-                    transformationController: _transformationController,
-                    panEnabled: true,
-                    scaleEnabled: true,
-                    minScale: 1.2,
-                    maxScale: 4.0,
-                    boundaryMargin: const EdgeInsets.all(20),
-                    child: Image.asset(
-                      'assets/3.0x/Localizacao.jpg',
-                      fit: BoxFit.contain,
-                    ),
+      body: Column(
+        children: [
+          // Mapa fixo no topo sem scroll
+          Stack(
+            children: [
+              SizedBox(
+                height: mapHeight,
+                width: double.infinity,
+                child: InteractiveViewer(
+                  transformationController: _transformationController,
+                  panEnabled: true,
+                  scaleEnabled: true,
+                  minScale: 1.2,
+                  maxScale: 4.0,
+                  boundaryMargin: const EdgeInsets.all(20),
+                  child: Image.asset(
+                    'assets/3.0x/Localizacao.jpg',
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: Column(
-                    children: [
-                      _buildZoomButton(
-                        icon: Icons.add,
-                        onPressed: _zoomIn,
-                      ),
-                      const SizedBox(height: 8),
-                      _buildZoomButton(
-                        icon: Icons.remove,
-                        onPressed: _zoomOut,
-                      ),
-                      const SizedBox(height: 8),
-                      _buildZoomButton(
-                        icon: Icons.center_focus_strong,
-                        onPressed: _resetZoom,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Locais do entorno:',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.darkGreen,
+              ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: Column(
+                  children: [
+                    _buildZoomButton(
+                      icon: Icons.add,
+                      onPressed: _zoomIn,
                     ),
-                  ),
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 8),
+                    _buildZoomButton(
+                      icon: Icons.remove,
+                      onPressed: _zoomOut,
+                    ),
+                    const SizedBox(height: 8),
+                    _buildZoomButton(
+                      icon: Icons.center_focus_strong,
+                      onPressed: _resetZoom,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          // Conteúdo com scroll
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Locais do entorno:',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.darkGreen,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
 
-                  // Educação
-                  _buildCategorySection(
-                    title: 'Educação',
-                    icon: Icons.school,
-                    locations: [
-                      {'name': 'Salesiano', 'time': '5 min | 9 min'},
-                      {'name': 'Wizard', 'time': '14 min | 8 min'},
-                      {'name': 'Grau Técnico', 'time': '13 min | 8 min'},
-                      {'name': 'Unicap', 'time': '21 min | 6 min'},
-                    ],
-                  ),
+                    // Educação
+                    _buildCategorySection(
+                      title: 'Educação',
+                      icon: Icons.school,
+                      locations: [
+                        {'name': 'Salesiano', 'time': '5 min | 9 min'},
+                        {'name': 'Wizard', 'time': '14 min | 8 min'},
+                        {'name': 'Grau Técnico', 'time': '13 min | 8 min'},
+                        {'name': 'Unicap', 'time': '21 min | 6 min'},
+                      ],
+                    ),
 
-                  // Bem-estar
-                  _buildCategorySection(
-                    title: 'Bem-estar',
-                    icon: Icons.fitness_center,
-                    locations: [
-                      {'name': 'Smart Fit', 'time': '17 min | 9 min'},
-                      {'name': 'Academia Biodinâmica', 'time': '10 min | 4 min'},
-                      {'name': 'Corpo em Movimento', 'time': '15 min | 5 min'},
-                    ],
-                  ),
+                    // Bem-estar
+                    _buildCategorySection(
+                      title: 'Bem-estar',
+                      icon: Icons.fitness_center,
+                      locations: [
+                        {'name': 'Smart Fit', 'time': '17 min | 9 min'},
+                        {'name': 'Academia Biodinâmica', 'time': '10 min | 4 min'},
+                        {'name': 'Corpo em Movimento', 'time': '15 min | 5 min'},
+                      ],
+                    ),
 
-                  // Saúde
-                  _buildCategorySection(
-                    title: 'Saúde',
-                    icon: Icons.local_hospital,
-                    locations: [
-                      {'name': 'Hospital Português', 'time': '8 min | 4 min'},
-                      {'name': 'Memorial São José', 'time': '8 min | 5 min'},
-                      {'name': 'Hope', 'time': '10 min | 4 min'},
-                      {'name': 'Imip', 'time': '13 min | 5 min'},
-                    ],
-                  ),
+                    // Saúde
+                    _buildCategorySection(
+                      title: 'Saúde',
+                      icon: Icons.local_hospital,
+                      locations: [
+                        {'name': 'Hospital Português', 'time': '8 min | 4 min'},
+                        {'name': 'Memorial São José', 'time': '8 min | 5 min'},
+                        {'name': 'HOPE', 'time': '10 min | 4 min'},
+                        {'name': 'IMIP', 'time': '13 min | 5 min'},
+                      ],
+                    ),
 
-                  // Gastronomia
-                  _buildCategorySection(
-                    title: 'Gastronomia',
-                    icon: Icons.restaurant,
-                    locations: [
-                      {'name': 'Skillus', 'time': '2 min | 1 min'},
-                      {'name': 'La em Casa', 'time': '7 min | 4 min'},
-                      {'name': 'Ilha Gourmet', 'time': '7 min | 8 min'},
-                      {'name': 'Dona Salsa', 'time': '6 min | 5 min'},
-                      {'name': 'Triunfo Gourmet', 'time': '5 min | 5 min'},
-                      {'name': 'Frisabor', 'time': '6 min | 3 min'},
-                    ],
-                  ),
+                    // Gastronomia
+                    _buildCategorySection(
+                      title: 'Gastronomia',
+                      icon: Icons.restaurant,
+                      locations: [
+                        {'name': 'Skillus', 'time': '2 min | 1 min'},
+                        {'name': 'La em Casa', 'time': '7 min | 4 min'},
+                        {'name': 'Ilha Gourmet', 'time': '7 min | 8 min'},
+                        {'name': 'Dona Salsa', 'time': '6 min | 5 min'},
+                        {'name': 'Triunfo Gourmet', 'time': '5 min | 5 min'},
+                        {'name': 'Frisabor', 'time': '6 min | 3 min'},
+                      ],
+                    ),
 
-                  // Comércio
-                  _buildCategorySection(
-                    title: 'Comércio',
-                    icon: Icons.shopping_bag,
-                    locations: [
-                      {'name': 'Shopping Boa Vista', 'time': '14 min | 5 min'},
-                      {'name': 'Cinema São Luiz', 'time': '24 min | 7 min'},
-                      {'name': 'Teatro Boa Vista', 'time': '9 min | 8 min'},
-                      {'name': 'Cinema Fundação Joaquim Nabuco', 'time': '14 min | 9 min'},
-                      {'name': 'Drogasil', 'time': '17 min | 7 min'},
-                      {'name': 'Pague Menos', 'time': '1 min | 1 min'},
-                      {'name': 'Farmácia Independente', 'time': '3 min | 2 min'},
-                      {'name': 'Atacado dos presentes', 'time': '19 min | 8 min'},
-                    ],
-                  ),
+                    // Comércio
+                    _buildCategorySection(
+                      title: 'Comércio',
+                      icon: Icons.shopping_bag,
+                      locations: [
+                        {'name': 'Shopping Boa Vista', 'time': '14 min | 5 min'},
+                        {'name': 'Cinema São Luiz', 'time': '24 min | 7 min'},
+                        {'name': 'Teatro Boa Vista', 'time': '9 min | 8 min'},
+                        {'name': 'Cinema Fundação Joaquim Nabuco', 'time': '14 min | 9 min'},
+                        {'name': 'Drogasil', 'time': '17 min | 7 min'},
+                        {'name': 'Pague Menos', 'time': '1 min | 1 min'},
+                        {'name': 'Farmácia Independente', 'time': '3 min | 2 min'},
+                        {'name': 'Atacado dos presentes', 'time': '19 min | 8 min'},
+                      ],
+                    ),
 
-                  const SizedBox(height: 20),
-                ],
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -158,7 +164,7 @@ class LocalizacaoView extends GetView<LocalizacaoController> {
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
       decoration: BoxDecoration(
-                    color: AppColors.lightBeige, // Bege claro da paleta
+        color: AppColors.lightBeige,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -174,9 +180,9 @@ class LocalizacaoView extends GetView<LocalizacaoController> {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-                   color: AppColors.darkGreen, // Verde escuro da paleta
-              borderRadius: const BorderRadius.only(
+            decoration: const BoxDecoration(
+              color: AppColors.darkGreen,
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),
@@ -185,8 +191,8 @@ class LocalizacaoView extends GetView<LocalizacaoController> {
               children: [
                 Icon(
                   icon,
-                 color: AppColors.pureWhite,
-                 size: 24,
+                  color: AppColors.pureWhite,
+                  size: 24,
                 ),
                 const SizedBox(width: 12),
                 Text(
@@ -196,6 +202,24 @@ class LocalizacaoView extends GetView<LocalizacaoController> {
                     fontWeight: FontWeight.bold,
                     color: AppColors.pureWhite,
                   ),
+                ),
+                const Spacer(),
+                const Icon(
+                  Icons.directions_walk,
+                  color: AppColors.pureWhite,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  width: 1,
+                  height: 20,
+                  color: AppColors.pureWhite,
+                ),
+                const SizedBox(width: 8),
+                const Icon(
+                  Icons.directions_car,
+                  color: AppColors.pureWhite,
+                  size: 20,
                 ),
               ],
             ),

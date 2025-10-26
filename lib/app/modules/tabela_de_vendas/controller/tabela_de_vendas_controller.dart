@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TabelaDeVendasController extends GetxController {
-  // URL da tabela de vendas (será definida quando disponível)
-  final String? tabelaUrl = null;
+  // URL da tabela de vendas no Google Drive
+  final String? tabelaUrl = 'https://drive.google.com/drive/folders/1cSaYlbeC8CtlpB-OX-AF9yRQ078-3Rtv?usp=sharing';
 
   // Status da tabela
   final RxBool isLoading = false.obs;

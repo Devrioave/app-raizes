@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:raizes/app/modules/areas_comuns/models/data.dart';
 import 'package:raizes/app/modules/areas_comuns/models/area_comum.dart';
 import 'package:raizes/app/themes/app_themes.dart';
@@ -20,9 +21,27 @@ class _AreaImagesViewState extends State<AreaImagesView> {
   void initState() {
     super.initState();
 
+    // Permitir orientação landscape
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
     // Obter todas as áreas com imagens
-    locais = areasComuns.expand((element) => element.locais).toList();
-    locais.removeWhere((local) => local.imgPath == null);
+    var allLocais = areasComuns.expand((element) => element.locais).toList();
+    allLocais.removeWhere((local) => local.imgPath == null);
+
+    // Remover duplicatas de imagens (ex: 3 bicicletários com mesma imagem)
+    final seenImages = <String>{};
+    locais = allLocais.where((local) {
+      if (seenImages.contains(local.imgPath)) {
+        return false;
+      }
+      seenImages.add(local.imgPath!);
+      return true;
+    }).toList();
 
     // Encontrar índice inicial
     var initialImgIndex = locais.indexWhere((local) => local.imgPath == widget.initialImgPath);
@@ -34,6 +53,11 @@ class _AreaImagesViewState extends State<AreaImagesView> {
 
   @override
   void dispose() {
+    // Restaurar orientação portrait ao sair
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     _pageController.dispose();
     super.dispose();
   }
@@ -123,9 +147,10 @@ class _AreaImagesViewState extends State<AreaImagesView> {
                         ),
                       ),
 
-                      // Contador de imagens
+                      // Nome da área em destaque
                       Expanded(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               currentLocal.description,
@@ -133,25 +158,17 @@ class _AreaImagesViewState extends State<AreaImagesView> {
                                 color: AppColors.primaryBeige,
                                 height: 1.2,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                                fontSize: 20,
                               ),
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              '${currentIndex + 1} de ${locais.length}',
-                              style: const TextStyle(
-                                color: AppColors.primaryBeige,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            const Text(
                               "Imagem meramente ilustrativa",
                               style: TextStyle(
-                                color: AppColors.primaryBeige,
+                                color: AppColors.primaryBeige.withValues(alpha: 0.7),
                                 fontSize: 11,
+                                fontStyle: FontStyle.italic,
                               ),
                             ),
                           ],

@@ -19,8 +19,11 @@ class _YoutubeVideoPlayerContainerState
   void initState() {
     super.initState();
 
+    // Extrai o ID do vídeo da URL
+    final videoId = YoutubePlayer.convertUrlToId(widget.url) ?? widget.url;
+
     _controller = YoutubePlayerController(
-      initialVideoId: widget.url,
+      initialVideoId: videoId,
       flags: const YoutubePlayerFlags(
         autoPlay: true,
         mute: false,

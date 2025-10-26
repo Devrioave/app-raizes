@@ -1,86 +1,137 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:raizes/app/components/raizes_scaffold.dart';
 import 'package:raizes/app/modules/home/controller/home_controller.dart';
-
-import '../../../components/youtube_player_container.dart';
+import 'package:video_player/video_player.dart';
+import 'package:raizes/app/components/youtube_player_container.dart';
+import 'package:raizes/app/components/raizes_drawer.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RaizesScaffold(
-      title: Row(
-        mainAxisSize: MainAxisSize.min,
+    final scaffoldKey = GlobalKey<ScaffoldState>();
+
+    return Scaffold(
+      key: scaffoldKey,
+      drawer: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: 5.0,
+          sigmaY: 5.0,
+        ),
+        child: const RaizesDrawer(token: null),
+      ),
+      body: Stack(
         children: [
-          Flexible(
-            child: Image.asset(
-              'assets/images/Marca-home.png',
-              fit: BoxFit.contain,
-              height: 60,
+          // Vídeo de fundo
+          Obx(() {
+            final videoController = controller.videoController.value;
+            if (videoController != null && videoController.value.isInitialized) {
+              return SizedBox.expand(
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: SizedBox(
+                    width: videoController.value.size.width,
+                    height: videoController.value.size.height,
+                    child: VideoPlayer(videoController),
+                  ),
+                ),
+              );
+            }
+            return Container(color: Colors.black);
+          }),
+
+          // Header com menu e logo RAIZES
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              child: Container(
+                height: 100,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF5D7052),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Menu hamburger
+                    IconButton(
+                      icon: const Icon(Icons.menu, color: Colors.white, size: 28),
+                      onPressed: () {
+                        scaffoldKey.currentState?.openDrawer();
+                      },
+                    ),
+
+                    // Logo RAIZES
+                    Expanded(
+                      child: Center(
+                        child: Image.asset(
+                          'assets/images/Marca-home.png',
+                          height: 45,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+
+                    // Ícone de play
+                    IconButton(
+                      icon: const Icon(Icons.play_circle_outline, color: Colors.white, size: 32),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Scaffold(
+                              backgroundColor: Colors.black,
+                              body: Stack(
+                                children: [
+                                  const Center(
+                                    child: YoutubeVideoPlayerContainer(
+                                      url: 'https://www.youtube.com/watch?v=xywfgKlpX4o',
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 40,
+                                    right: 16,
+                                    child: IconButton(
+                                      icon: const Icon(Icons.close, color: Colors.white, size: 32),
+                                      onPressed: () => Navigator.of(context).pop(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-          const SizedBox(width: 12),
-          Flexible(
-            child: Image.asset(
-              'assets/images/Marca-rio-ave.png',
-              fit: BoxFit.contain,
-              height: 30,
+
+          // Logo Rio Ave no rodapé
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 120,
+              decoration: const BoxDecoration(
+                color: Color(0xFF5D7052),
+              ),
+              child: Center(
+                child: Image.asset(
+                  'assets/images/Marca-rio-ave.png',
+                  height: 50,
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
           ),
         ],
-      ),
-      actionsBuilder: () => [
-        IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Scaffold(
-                  backgroundColor: Colors.black,
-                  body: Stack(
-                    children: [
-                      const Center(
-                        child: YoutubeVideoPlayerContainer(
-                          url: '',
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 24,
-                        right: 24,
-                        child: ElevatedButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text("Fechar"),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-          icon: const Icon(Icons.video_camera_front),
-        ),
-      ],
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Image.asset(
-          'assets/videos/fachada-nova.tiff',
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return const Center(
-              child: Text(
-                'Erro ao carregar imagem',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.red,
-                ),
-              ),
-            );
-          },
-        ),
       ),
     );
   }

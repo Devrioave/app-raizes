@@ -1,9 +1,10 @@
 class AreaComum {
   final String name;
   final String plantaImg;
+  final String? plantaImgHighRes; // Imagem de alta resolução para fullscreen
   final List<Local> locais;
 
-  const AreaComum(this.name, this.plantaImg, this.locais);
+  const AreaComum(this.name, this.plantaImg, this.locais, {this.plantaImgHighRes});
 }
 
 class Local {

@@ -20,19 +20,19 @@ A RIO AVE se reserva o direito de alterar as especificações do empreendimento,
 
 Para maiores informações, consulte o memorial descritivo e o contrato de compra e venda.
 
-INCORPORAÇÃO: RIO AVE EMPREENDIMENTOS S.A.
-CNPJ: XX.XXX.XXX/XXXX-XX
-ENDEREÇO: Rua da Aurora, 123 - Boa Vista, Recife - PE
+INCORPORAÇÃO: RIO AVE OÁSIS TORRE 1 SPE LTDA
+CNPJ: 42.285.683/0001-10
+ENDEREÇO: Rua Professor Aloísio Pessoa de Araújo, nº75 - Sala 1406 em parte - Boa Viagem - Recife - PE
 
 Complexo Salesianos:
 O Complexo Salesianos é um projeto de revitalização urbana que visa integrar o empreendimento RAÍZES com a história e a cultura do bairro da Boa Vista. As informações sobre o Complexo Salesianos são de caráter informativo e não vinculam a RIO AVE a qualquer obrigação de execução ou manutenção de obras fora dos limites do empreendimento RAÍZES.
 
 Direitos Autorais:
-Todo o conteúdo deste aplicativo, incluindo textos, imagens, vídeos e logotipos, é de propriedade exclusiva da RIO AVE EMPREENDIMENTOS S.A. ou de seus licenciadores, e está protegido pelas leis de direitos autorais. Qualquer reprodução, distribuição ou uso não autorizado é proibido.
+Todo o conteúdo deste aplicativo, incluindo textos, imagens, vídeos e logotipos, é de propriedade exclusiva da RIO AVE OÁSIS TORRE 1 SPE LTDA ou de seus licenciadores, e está protegido pelas leis de direitos autorais. Qualquer reprodução, distribuição ou uso não autorizado é proibido.
 
 Ao utilizar este aplicativo, você concorda com os termos e condições aqui estabelecidos.
 
-© 2023 RIO AVE EMPREENDIMENTOS S.A. Todos os direitos reservados.
+© 2024 RIO AVE OÁSIS TORRE 1 SPE LTDA
 """;
 
   @override

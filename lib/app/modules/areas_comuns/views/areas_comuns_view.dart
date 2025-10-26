@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:raizes/app/components/raizes_scaffold.dart';
@@ -15,7 +16,6 @@ import '../models/data.dart';
 
 class AreasComunsView extends GetView<AreasComunsController> {
   AreasComunsView({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +51,7 @@ class AreasComunsView extends GetView<AreasComunsController> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                const SizedBox(
-                  height: 8,
-                ),
+                const SizedBox(height: 8),
                 Obx(() {
                   return SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -99,6 +97,7 @@ class AreasComunsView extends GetView<AreasComunsController> {
                         );
                       },
                       child: Container(
+                        key: ValueKey(controller.currentTab.value),
                         width: double.infinity,
                         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                         decoration: BoxDecoration(
@@ -117,7 +116,6 @@ class AreasComunsView extends GetView<AreasComunsController> {
                           child: Container(
                             color: AppColors.softWhite,
                             child: InteractiveViewer(
-                              key: ValueKey(controller.currentTab.value),
                               maxScale: 5,
                               minScale: 1.2,
                               child: Container(
@@ -126,45 +124,94 @@ class AreasComunsView extends GetView<AreasComunsController> {
                                 child: Stack(
                                   fit: StackFit.expand,
                                   children: [
-                                    Transform.scale(
-                                      scale: (areasComuns[controller.currentTab.value].name == 'G2' ||
-                                             areasComuns[controller.currentTab.value].name == 'G3' ||
-                                             areasComuns[controller.currentTab.value].name == 'LAZER') ? 1.1 : 1.3,
-                                      child: Image.asset(
-                                          areasComuns[controller.currentTab.value]
-                                              .plantaImg,
-                                          key: ValueKey('${areasComuns[controller.currentTab.value].plantaImg}_v2'),
-                                          fit: BoxFit.contain,
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                          cacheWidth: null,
-                                          cacheHeight: null,
-                                          errorBuilder: (context, error, stackTrace) {
-                                            return Container(
-                                              color: AppColors.softWhite,
-                                              child: Center(
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.image_not_supported,
-                                                      size: 48,
-                                                      color: AppColors.iconColor.withValues(alpha: 0.5),
-                                                    ),
-                                                    const SizedBox(height: 8),
-                                                    Text(
-                                                      'Imagem não encontrada',
-                                                      style: TextStyle(
-                                                        color: AppColors.iconColor.withValues(alpha: 0.7),
-                                                        fontSize: 14,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
+                                    GestureDetector(
+                                      onTap: () => _showFullScreenPlant(
+                                        context,
+                                        areasComuns[controller.currentTab.value].plantaImgHighRes ??
+                                        areasComuns[controller.currentTab.value].plantaImg,
+                                        areasComuns[controller.currentTab.value].name
                                       ),
+                                       child: areasComuns[controller.currentTab.value].name == 'LAZER'
+                                         ? Transform(
+                                             transform: Matrix4.identity()
+                                               ..scale(1.1, 0.66),
+                                             alignment: Alignment.center,
+                                             child: Image.asset(
+                                               areasComuns[controller.currentTab.value].plantaImg,
+                                               key: ValueKey('${areasComuns[controller.currentTab.value].plantaImg}_v2'),
+                                               fit: BoxFit.contain,
+                                               width: double.infinity,
+                                               height: double.infinity,
+                                               cacheWidth: null,
+                                               cacheHeight: null,
+                                               errorBuilder: (context, error, stackTrace) {
+                                                 return Container(
+                                                   color: AppColors.softWhite,
+                                                   child: Center(
+                                                     child: Column(
+                                                       mainAxisAlignment: MainAxisAlignment.center,
+                                                       children: [
+                                                         Icon(
+                                                           Icons.image_not_supported,
+                                                           size: 48,
+                                                           color: AppColors.iconColor.withValues(alpha: 0.5),
+                                                         ),
+                                                         const SizedBox(height: 8),
+                                                         Text(
+                                                           'Imagem não encontrada',
+                                                           style: TextStyle(
+                                                             color: AppColors.iconColor.withValues(alpha: 0.7),
+                                                             fontSize: 14,
+                                                           ),
+                                                         ),
+                                                       ],
+                                                     ),
+                                                   ),
+                                                 );
+                                               },
+                                             ),
+                                           )
+                                         : Transform.scale(
+                                             scale: areasComuns[controller.currentTab.value].name == 'SEMIENTERRADO' ? 1.0 :
+                                                    (areasComuns[controller.currentTab.value].name == 'GARAGEM 1' ||
+                                                    areasComuns[controller.currentTab.value].name == 'GARAGEM 2' ||
+                                                    areasComuns[controller.currentTab.value].name == 'GARAGEM 3') ? 0.95 : 1.3,
+                                             child: Image.asset(
+                                               areasComuns[controller.currentTab.value].plantaImg,
+                                               key: ValueKey('${areasComuns[controller.currentTab.value].plantaImg}_v2'),
+                                               fit: BoxFit.contain,
+                                               width: double.infinity,
+                                               height: double.infinity,
+                                               cacheWidth: null,
+                                               cacheHeight: null,
+                                               errorBuilder: (context, error, stackTrace) {
+                                                 return Container(
+                                                   color: AppColors.softWhite,
+                                                   child: Center(
+                                                     child: Column(
+                                                       mainAxisAlignment: MainAxisAlignment.center,
+                                                       children: [
+                                                         Icon(
+                                                           Icons.image_not_supported,
+                                                           size: 48,
+                                                           color: AppColors.iconColor.withValues(alpha: 0.5),
+                                                         ),
+                                                         const SizedBox(height: 8),
+                                                         Text(
+                                                           'Imagem não encontrada',
+                                                           style: TextStyle(
+                                                             color: AppColors.iconColor.withValues(alpha: 0.7),
+                                                             fontSize: 14,
+                                                           ),
+                                                         ),
+                                                       ],
+                                                     ),
+                                                   ),
+                                                 );
+                                               },
+                                             ),
+                                           ),
+                                    ),
                                     ...areasComuns[controller.currentTab.value]
                                         .locais
                                         .map(
@@ -176,8 +223,7 @@ class AreasComunsView extends GetView<AreasComunsController> {
                                             ),
                                             onPressed: local.imgPath == null
                                                 ? null
-                                                : () => _launchGalery(
-                                                    context, local.imgPath),
+                                                : () => _launchGalery(context, local.imgPath),
                                           ),
                                         )
                                         .toList(),
@@ -287,5 +333,58 @@ class AreasComunsView extends GetView<AreasComunsController> {
         ),
       ),
     );
+  }
+
+  void _showFullScreenPlant(BuildContext context, String plantImg, String name) {
+    // Permitir rotação de tela
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WillPopScope(
+          onWillPop: () async {
+            // Restaurar orientação portrait ao voltar
+            SystemChrome.setPreferredOrientations([
+              DeviceOrientation.portraitUp,
+              DeviceOrientation.portraitDown,
+            ]);
+            return true;
+          },
+          child: Scaffold(
+            backgroundColor: Colors.black,
+            appBar: AppBar(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              elevation: 0,
+              title: Text(name),
+            ),
+            body: Center(
+              child: InteractiveViewer(
+                panEnabled: true,
+                scaleEnabled: true,
+                minScale: 0.5,
+                maxScale: 5.0,
+                child: Image.asset(
+                  plantImg,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ).then((_) {
+      // Restaurar orientação portrait quando a tela for fechada
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    });
   }
 }

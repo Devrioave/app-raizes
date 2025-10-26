@@ -27,14 +27,38 @@ class DescritivoPage extends StatelessWidget {
           AppearAnimation(
             duration: kThemeAnimationDuration * 2,
             delay: kThemeAnimationDuration,
-            child: Text(
-              "O Raízes resgata o que há de mais vivo no centro do Recife: Conexão, vida e transformação. Um reencontro com a história e com as pessoas.\nUm novo endereço para viver o tempo e o bairro no seu ritmo.",
-              style: TextStyle(
-                fontSize: 16,
-                height: 1.5,
-                color: AppColors.darkGray,
-              ),
+            child: RichText(
               textAlign: TextAlign.justify,
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 16,
+                  height: 1.5,
+                  color: AppColors.darkGray,
+                ),
+                children: [
+                  TextSpan(text: "O Raízes resgata o que há de mais vivo no centro do Recife: "),
+                  TextSpan(
+                    text: "Conexão",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(text: ", "),
+                  TextSpan(
+                    text: "vida",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(text: " e "),
+                  TextSpan(
+                    text: "transformação",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(text: ". Um reencontro com a história e com as pessoas.\nUm novo endereço para viver o "),
+                  TextSpan(
+                    text: "tempo",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(text: " e o bairro no seu ritmo."),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 32),
@@ -55,15 +79,23 @@ class DescritivoPage extends StatelessWidget {
             duration: kThemeAnimationDuration * 2,
             delay: kThemeAnimationDuration * 3,
             child: _buildInfoItem(
-              "Área total do terreno:",
-              "50.742,50 m² (21.014,76 m² Raízes com o empresarial)",
+              "Área do Terreno (Masterplan Completo):",
+              "50.742,50 m²",
+            ),
+          ),
+          AppearAnimation(
+            duration: kThemeAnimationDuration * 2,
+            delay: kThemeAnimationDuration * 3.2,
+            child: _buildInfoItem(
+              "Área do Terreno (Raízes):",
+              "21.014,76 m²",
             ),
           ),
           AppearAnimation(
             duration: kThemeAnimationDuration * 2,
             delay: kThemeAnimationDuration * 3.5,
             child: _buildInfoItem(
-              "Área privativa total:",
+              "Área Privativa Total do Raízes:",
               "44.468,61m²",
             ),
           ),
@@ -71,41 +103,69 @@ class DescritivoPage extends StatelessWidget {
           AppearAnimation(
             duration: kThemeAnimationDuration * 2,
             delay: kThemeAnimationDuration * 4,
-            child: _buildTowerInfo(
-              "Torre Gilvan Samico",
-              "31 pavimentos (23 tipos/ 2 pavimentos cobertura duplex); 1ª fase",
+            child: _buildTowerInfoNew(
+              "TORRE GILVAN SAMICO",
+              fase: "1ª fase",
+              items: [
+                "30 pavimentos, sendo:",
+                "• 23 pavimentos tipo",
+                "• 2 pavimentos de cobertura duplex",
+                "Apartamentos tipo de 95 m² a 98 m²",
+              ],
             ),
           ),
           AppearAnimation(
             duration: kThemeAnimationDuration * 2,
             delay: kThemeAnimationDuration * 4.5,
-            child: _buildTowerInfo(
-              "Torre Lula Cardoso Ayres",
-              "37 pavimentos (31 tipos); 1ª fase",
+            child: _buildTowerInfoNew(
+              "TORRE LULA CARDOSO AYRES",
+              fase: "1ª fase",
+              items: [
+                "36 pavimentos, sendo:",
+                "• 31 pavimentos tipo",
+                "Apartamentos de 50 m² a 58 m²",
+              ],
             ),
           ),
           AppearAnimation(
             duration: kThemeAnimationDuration * 2,
             delay: kThemeAnimationDuration * 5,
-            child: _buildTowerInfo(
-              "Torre Tereza Costa Rêgo",
-              "33 pavimentos (29 tipos/ 2 pavimentos coberturas linear); 2ª fase",
+            child: _buildTowerInfoNew(
+              "TORRE TEREZA COSTA RÊGO",
+              fase: "2ª fase",
+              items: [
+                "32 pavimentos, sendo:",
+                "• 29 pavimentos tipo",
+                "• 2 pavimentos de cobertura duplex",
+              ],
+              isSecondPhase: true,
             ),
           ),
           AppearAnimation(
             duration: kThemeAnimationDuration * 2,
             delay: kThemeAnimationDuration * 5.5,
-            child: _buildTowerInfo(
-              "Torre Cícero Dias",
-              "33 pavimentos (29 tipos/ 2 pavimentos coberturas linear); 1ª fase",
+            child: _buildTowerInfoNew(
+              "TORRE CÍCERO DIAS",
+              fase: "1ª fase",
+              items: [
+                "32 pavimentos no total, sendo:",
+                "• 29 pavimentos tipo",
+                "• 2 pavimentos de coberturas lineares",
+                "Apartamentos de 55 m² a 74 m²",
+              ],
             ),
           ),
           AppearAnimation(
             duration: kThemeAnimationDuration * 2,
             delay: kThemeAnimationDuration * 6,
-            child: _buildTowerInfo(
-              "Torre Abelardo da Hora",
-              "30 pavimentos (28 tipos); 2ª fase",
+            child: _buildTowerInfoNew(
+              "TORRE ABELARDO DA HORA",
+              fase: "2ª fase",
+              items: [
+                "29 pavimentos no total, sendo:",
+                "• 28 pavimentos tipo",
+              ],
+              isSecondPhase: true,
             ),
           ),
           const SizedBox(height: 24),
@@ -158,15 +218,22 @@ class DescritivoPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTowerInfo(String towerName, String description) {
+  Widget _buildTowerInfoNew(
+    String towerName, {
+    required String fase,
+    required List<String> items,
+    bool isSecondPhase = false,
+  }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.lightBeige,
+        color: isSecondPhase ? AppColors.lightBeige.withValues(alpha: 0.5) : AppColors.lightBeige,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.primaryGreen.withValues(alpha: 0.3),
+          color: isSecondPhase
+              ? AppColors.primaryGreen.withValues(alpha: 0.2)
+              : AppColors.primaryGreen.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -178,18 +245,45 @@ class DescritivoPage extends StatelessWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AppColors.darkGreen,
+              color: isSecondPhase
+                  ? AppColors.darkGreen.withValues(alpha: 0.6)
+                  : AppColors.darkGreen,
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            description,
-            style: TextStyle(
-              fontSize: 15,
-              color: AppColors.darkGray,
-              height: 1.4,
+          const SizedBox(height: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: isSecondPhase
+                  ? AppColors.iconColor.withValues(alpha: 0.3)
+                  : AppColors.primaryGreen.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(
+              fase,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: isSecondPhase
+                    ? AppColors.darkGray.withValues(alpha: 0.7)
+                    : AppColors.darkGreen,
+              ),
             ),
           ),
+          const SizedBox(height: 12),
+          ...items.map((item) => Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Text(
+              item,
+              style: TextStyle(
+                fontSize: 15,
+                color: isSecondPhase
+                    ? AppColors.darkGray.withValues(alpha: 0.7)
+                    : AppColors.darkGray,
+                height: 1.4,
+              ),
+            ),
+          )).toList(),
         ],
       ),
     );

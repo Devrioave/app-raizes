@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionStrsing while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.19+24
+version: 1.0.20+25
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -92,9 +92,7 @@ flutter:
     - assets/images/pattern3.png
     - assets/images/pattern4.png
     - assets/images/pattern5.png
-    - assets/images/family.jpg
     - assets/images/city.jpg
-    - assets/images/tempo.jpg
     - assets/images/seguranca_e_conforto.png
     - assets/images/sustentabilidade.png
     - assets/images/tecnologia.png
@@ -106,7 +104,12 @@ flutter:
     - assets/images/plantas/BLOCO G/
     - assets/images/plantas/BLOCO H/
     - assets/images/plantas/BLOCO I/
+    - assets/images/plantas_v2/GILVAN SAMICO/
+    - assets/images/plantas_v2/LULA CARDOSO AYRES/
+    - assets/images/plantas_v2/CÍCERO DIAS/
+    - assets/images/plantas_v2/GERAL/
     - assets/images/areas_comuns/
+    - assets/images/areas_comuns_v2/
     - assets/images/projetistas/Juliano Dubeux - Projeto Urbanístico/Fotos/
     - assets/images/projetistas/Metro Arquitetura - Projeto Arquitetônico/Fotos/
     - assets/images/projetistas/Sérgio Santana - Paisagista/Foto Institucional/
@@ -119,7 +122,6 @@ flutter:
     - assets/images/areas_privativa/BLOCO H - 74m²/
     - assets/misc/
     - assets/videos/
-    - assets/videos/fachada-nova.tiff
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
