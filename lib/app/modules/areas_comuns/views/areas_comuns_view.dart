@@ -13,9 +13,10 @@ import 'package:raizes/app/modules/areas_comuns/views/components/interactive_but
 import 'package:raizes/app/themes/app_themes.dart';
 
 import '../models/data.dart';
+import '../models/area_comum.dart';
 
 class AreasComunsView extends GetView<AreasComunsController> {
-  AreasComunsView({Key? key}) : super(key: key);
+  const AreasComunsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +223,7 @@ class AreasComunsView extends GetView<AreasComunsController> {
                                               local.relativeLocation.py,
                                             ),
                                             onPressed: local.imgPath == null
-                                                ? null
+                                                ? () => _showLocalInfo(context, local)
                                                 : () => _launchGalery(context, local.imgPath),
                                           ),
                                         )
@@ -296,7 +297,7 @@ class AreasComunsView extends GetView<AreasComunsController> {
                           number: local.number.toString(),
                           title: local.description,
                           onTap: local.imgPath == null
-                              ? null
+                              ? () => _showLocalInfo(context, local)
                               : () => _launchGalery(context, local.imgPath),
                         ),
                       )
@@ -331,6 +332,77 @@ class AreasComunsView extends GetView<AreasComunsController> {
         builder: (context) => AreaImagesView(
           initialImgPath: path,
         ),
+      ),
+    );
+  }
+
+  void _showLocalInfo(BuildContext context, Local local) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: AppColors.primaryGreen,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  local.number.toString(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                local.description,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.info_outline,
+              size: 48,
+              color: AppColors.primaryGreen,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Foto não disponível no momento.',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Fechar',
+              style: TextStyle(
+                color: AppColors.primaryGreen,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

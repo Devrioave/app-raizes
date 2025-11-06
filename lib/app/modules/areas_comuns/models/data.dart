@@ -43,7 +43,7 @@ const areasComuns = [
   // TÉRREO
   AreaComum(
     'TÉRREO',
-    'assets/images/plantas/GERAL/RAIZ_CMP_AP_002_BOL-TERREO_R00.png',
+    'assets/images/plantas/GERAL/RAIZ_CMP_AP_002_BOL-TERREO_R00.jpg',
     [
       Local(
         5,
@@ -178,7 +178,7 @@ const areasComuns = [
         LocationPercent(0.22, 0.60),
       ),
     ],
-    plantaImgHighRes: 'assets/images/plantas_v2/GERAL/RAIZ_IMG_PH_GE_0003_TÉRREO.jpg',
+    plantaImgHighRes: 'assets/images/plantas_v2/GERAL/RAIZ_IMG_PH_GE_0003_TERREO.jpg',
   ),
 
   // GARAGEM 1
@@ -194,7 +194,7 @@ const areasComuns = [
   // GARAGEM 2
   AreaComum(
     'GARAGEM 2',
-    'assets/images/plantas/GERAL/RAIZ_CMP_AP_003_BOL-G2_R00.png',
+    'assets/images/plantas_v2/GERAL/RAIZ_IMG_PH_GE_0005_G2.jpg',
     [
       Local(
         27,
@@ -204,8 +204,8 @@ const areasComuns = [
       ),
       Local(
         28,
-        "Pet Wash",
-        'assets/images/areas_comuns/129_Pet_Wash_05.jpg',
+        "Spa",
+        'assets/images/areas_comuns_v2/RAIZ_IMG_AC_BE_0033_WELLNESS V02.jpg',
         LocationPercent(0.09, 0.51),
       ),
     ],
@@ -215,18 +215,18 @@ const areasComuns = [
   // GARAGEM 3
   AreaComum(
     'GARAGEM 3',
-    'assets/images/plantas/GERAL/RAIZ_CMP_AP_004_BOL-G3_R00.png',
+    'assets/images/plantas_v2/GERAL/RAIZ_IMG_PH_GE_0006_G3.jpg',
     [
       Local(
         29,
-        "Spa",
-        'assets/images/areas_comuns_v2/RAIZ_IMG_AC_BE_0033_WELLNESS V02.jpg',
+        "Salas de Massagem",
+        'assets/images/areas_comuns/RAIZ_IMG_AC_BE_0034_SALA DE MASSAGEM.jpg',
         LocationPercent(0.09, 0.50),
       ),
       Local(
         30,
-        "Salas de Massagem",
-        'assets/images/areas_comuns/RAIZ_IMG_AC_BE_0034_SALA DE MASSAGEM.jpg',
+        "Pet Wash",
+        'assets/images/areas_comuns/129_Pet_Wash_05.jpg',
         LocationPercent(0.40, 0.56),
       ),
     ],
@@ -248,7 +248,7 @@ const areasComuns = [
         32,
         "Sala Multiuso",
         'assets/images/areas_comuns_v2/RAIZ_IMG_AC_BE_0036_ACADEMIA V02.jpg',
-        LocationPercent(0.10, 0.53),
+        LocationPercent(0.02, 0.45),
       ),
       Local(
         33,
@@ -258,13 +258,13 @@ const areasComuns = [
       ),
       Local(
         34,
-        "Wine Bar",
+        "Terraço Wine",
         'assets/images/areas_comuns/122_Wine_04.jpg',
         LocationPercent(0.46, 0.48),
       ),
       Local(
         35,
-        "Terraço Wine",
+        "Wine Bar",
         'assets/images/areas_comuns/122_Wine_04.jpg',
         LocationPercent(0.46, 0.52),
       ),

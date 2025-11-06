@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:raizes/app/components/raizes_scaffold.dart';
 import 'package:raizes/app/themes/app_themes.dart';
 import 'package:raizes/app/modules/plantas/controller/plantas_controller.dart';
+import 'package:raizes/app/modules/plantas/views/components/planta_image_view.dart';
 
 class PlantasView extends GetView<PlantasController> {
   const PlantasView({Key? key}) : super(key: key);
@@ -128,6 +129,8 @@ class PlantasView extends GetView<PlantasController> {
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: plantas.length,
+      addAutomaticKeepAlives: false,
+      addRepaintBoundaries: true,
       itemBuilder: (context, index) {
         final planta = plantas[index];
 
@@ -193,6 +196,7 @@ class PlantasView extends GetView<PlantasController> {
                                   subImg.imagem,
                                   width: double.infinity,
                                   fit: BoxFit.contain,
+                                  cacheWidth: 1200,
                                   errorBuilder: (context, error, stackTrace) {
                                     return Container(
                                       height: 200,
@@ -216,16 +220,17 @@ class PlantasView extends GetView<PlantasController> {
                           ],
                         );
                       }).toList(),
-                    ] else ...[
+                    ] else if (planta.imagem != null && planta.imagem!.isNotEmpty) ...[
                       // Imagem única
                       GestureDetector(
-                        onTap: () => _showFullScreenImage(planta.imagem, planta.titulo),
+                        onTap: () => _showFullScreenImage(planta.imagem!, planta.titulo),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.asset(
-                            planta.imagem,
+                            planta.imagem!,
                             width: double.infinity,
                             fit: BoxFit.contain,
+                            cacheWidth: 1200,
                             errorBuilder: (context, error, stackTrace) {
                               return Container(
                                 height: 200,
@@ -290,69 +295,9 @@ class PlantasView extends GetView<PlantasController> {
 
   void _showFullScreenImage(String imagePath, String title) {
     Get.to(
-      () => Scaffold(
-        backgroundColor: Colors.black,
-        body: Stack(
-          children: [
-            Center(
-              child: InteractiveViewer(
-                panEnabled: true,
-                scaleEnabled: true,
-                minScale: 0.5,
-                maxScale: 5.0,
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            Positioned(
-              top: 40,
-              right: 16,
-              child: SafeArea(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.6),
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white, size: 30),
-                    onPressed: () => Get.back(),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black.withValues(alpha: 0.7),
-                    ],
-                  ),
-                ),
-                child: SafeArea(
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+      () => PlantaImageView(
+        imagePath: imagePath,
+        title: title,
       ),
     );
   }
@@ -364,6 +309,7 @@ class PlantasView extends GetView<PlantasController> {
         body: PageView.builder(
           controller: PageController(initialPage: initialIndex),
           itemCount: ambientes.length,
+          allowImplicitScrolling: true,
           itemBuilder: (context, index) {
             final ambiente = ambientes[index];
             return Stack(
@@ -449,84 +395,82 @@ class PlantasView extends GetView<PlantasController> {
   List<PlantaData> _getGilvanSamicoPlants() {
     return [
       PlantaData(
-        titulo: '0009 - Pavimento Tipo',
-        imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_0009_PAV. TIPO.jpg',
+        titulo: 'Pavimento Tipo',
+        imagem: 'assets/images/plantas_v2/GILVAN SAMICO - PAVIMENTOS/RAIZ_IMG_PH_BE_0009_PAV. TIPO.jpg',
       ),
       PlantaData(
-        titulo: '0010 - Cobertura Térreo',
-        imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_0010_COBERTURA TÉRREO.jpg',
+        titulo: 'Cobertura 01 - Térreo',
+        imagem: 'assets/images/plantas_v2/GILVAN SAMICO - PAVIMENTOS/RAIZ_IMG_PH_BE_2901_COBERTURA 01 TERREO.jpg',
       ),
       PlantaData(
-        titulo: '0011 - Cobertura 1º Pavimento',
-        imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_0011_COBERTURA1 PAV.jpg',
+        titulo: 'Cobertura 01 - 1º Pavimento',
+        imagem: 'assets/images/plantas_v2/GILVAN SAMICO - PAVIMENTOS/RAIZ_IMG_PH_BE_2901_COBERTURA 01 1 PAV.jpg',
       ),
       PlantaData(
-        titulo: 'Tipo Apto 01',
+        titulo: 'Apto Tipo - Terminação 01',
         area: '97m²',
-        imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_TIPO_APTO 01 97m².jpg',
+        imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_TIPO_APTO 01 97m2.jpg',
         ambientes: [
           AmbienteData(
             titulo: 'Sala, Cozinha e Terraço',
-            imagem: 'assets/images/areas_privativa/BLOCO E - 92m²/RAIZ_IMG_AP_BE_0601_SALA, COZINHA E TERRAÇO.jpg',
+            imagem: 'assets/images/areas_privativa/BLOCO E - 92m²/RAIZ_IMG_AP_BE_0601_SALA, COZINHA E TERRACO.jpg',
           ),
         ],
       ),
       PlantaData(
-        titulo: 'Tipo Apto 02',
+        titulo: 'Apto Tipo - Terminação 02',
         area: '95m²',
-        imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_TIPO_APTO 02 95m².jpg',
+        imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_TIPO_APTO 02 95m2.jpg',
         ambientes: [
           AmbienteData(
             titulo: 'Jantar, Estar e Terraço',
-            imagem: 'assets/images/areas_privativa/BLOCO E - 92m² (DECORADO)/RAIZ_IMG_AP_BE_0602_JANTAR, ESTAR E TERRAÇO.jpg',
+            imagem: 'assets/images/areas_privativa/BLOCO E - 92m² (DECORADO)/RAIZ_IMG_AP_BE_0602_JANTAR, ESTAR E TERRACO.jpg',
           ),
           AmbienteData(
             titulo: 'Suíte Master',
-            imagem: 'assets/images/areas_privativa/BLOCO E - 92m² (DECORADO)/RAIZ_IMG_AP_BE_0602_SUÍTE MASTER.jpg',
+            imagem: 'assets/images/areas_privativa/BLOCO E - 92m² (DECORADO)/RAIZ_IMG_AP_BE_0602_SUITE MASTER.jpg',
           ),
           AmbienteData(
             titulo: 'Demi-suíte 02 (Quarto Menino)',
-            imagem: 'assets/images/areas_privativa/BLOCO E - 92m² (DECORADO)/RAIZ_IMG_AP_BE_0602_DEMI-SUÍTE 02 (QUARTO MENINO).jpg',
+            imagem: 'assets/images/areas_privativa/BLOCO E - 92m² (DECORADO)/RAIZ_IMG_AP_BE_0602_DEMI-SUITE 02 (QUARTO MENINO).jpg',
           ),
         ],
       ),
       PlantaData(
         titulo: 'Cobertura Duplex 2901',
         area: '194m²',
-        imagem: '', // Não usado quando tem subImagens
         subImagens: [
           SubImagem(
             subtitulo: 'Térreo',
-            imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_2901_COBERTURA DUPLEX TÉRREO 194m².jpg',
+            imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_2901_COBERTURA DUPLEX TERREO 194m2.jpg',
           ),
           SubImagem(
             subtitulo: '1º pavimento',
-            imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_2901_COBERTURA DUPLEX 1°PAV 194m².jpg',
+            imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_2901_COBERTURA DUPLEX 1PAV 194m2.jpg',
           ),
         ],
         ambientes: [
           AmbienteData(
             titulo: 'Estar, Jantar, Terraço e Cozinha',
-            imagem: 'assets/images/areas_privativa/BLOCO E - Cobertura Duplex/RAIZ_IMG_AP_BE_2902_ESTAR, JANTAR, TERRAÇO E COZINHA.jpg',
+            imagem: 'assets/images/areas_privativa/BLOCO E - Cobertura Duplex/RAIZ_IMG_AP_BE_2902_ESTAR, JANTAR, TERRACO E COZINHA.jpg',
           ),
           AmbienteData(
             titulo: 'Suíte Master',
-            imagem: 'assets/images/areas_privativa/BLOCO E - Cobertura Duplex/RAIZ_IMG_AP_BE_2902_SUÍTE MASTER.jpg',
+            imagem: 'assets/images/areas_privativa/BLOCO E - Cobertura Duplex/RAIZ_IMG_AP_BE_2902_SUITE MASTER.jpg',
           ),
         ],
       ),
       PlantaData(
         titulo: 'Cobertura Duplex 2902',
         area: '190m²',
-        imagem: '', // Não usado quando tem subImagens
         subImagens: [
           SubImagem(
             subtitulo: 'Térreo',
-            imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_2902_COBERTURA DUPLEX TÉRREO 190m².jpg',
+            imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_2902_COBERTURA DUPLEX TERREO 190m2.jpg',
           ),
           SubImagem(
             subtitulo: '1º pavimento',
-            imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_2902_COBERTURA DUPLEX 1°PAV 190m².jpg',
+            imagem: 'assets/images/plantas_v2/GILVAN SAMICO/RAIZ_IMG_PH_BE_2902_COBERTURA DUPLEX 1PAV 190m2.jpg',
           ),
         ],
       ),
@@ -537,11 +481,11 @@ class PlantasView extends GetView<PlantasController> {
   List<PlantaData> _getLulaCardosoPlants() {
     return [
       PlantaData(
-        titulo: '0012 - Pavimento Tipo',
+        titulo: 'Pavimento Tipo',
         imagem: 'assets/images/plantas_v2/LULA CARDOSO AYRES/RAIZ_IMG_PH_BF_0012_PAV. TIPO.jpg',
       ),
       PlantaData(
-        titulo: 'Tipo Apto 02',
+        titulo: 'Apto Tipo - Terminação 02',
         area: '58m²',
         imagem: 'assets/images/plantas_v2/LULA CARDOSO AYRES/RAIZ_IMG_PH_BF_TIPO_APTO 02 58m².jpg',
         ambientes: [
@@ -551,22 +495,22 @@ class PlantasView extends GetView<PlantasController> {
           ),
           AmbienteData(
             titulo: 'Quarto Criança',
-            imagem: 'assets/images/areas_privativa/BLOCO F - 56m² (DECORADO)/RAIZ_IMG_AP_BF_0602_QUARTO CRIANÇA.jpg',
+            imagem: 'assets/images/areas_privativa/BLOCO F - 56m² (DECORADO)/RAIZ_IMG_AP_BF_0602_QUARTO CRIANCA.jpg',
           ),
           AmbienteData(
             titulo: 'Suíte',
-            imagem: 'assets/images/areas_privativa/BLOCO F - 56m² (DECORADO)/RAIZ_IMG_AP_BF_0602_SUÍTE.jpg',
+            imagem: 'assets/images/areas_privativa/BLOCO F - 56m² (DECORADO)/RAIZ_IMG_AP_BF_0602_SUITE.jpg',
           ),
         ],
       ),
       PlantaData(
-        titulo: 'Tipo Apto 05',
+        titulo: 'Apto Tipo - Terminação 05',
         area: '51,9m²',
         imagem: 'assets/images/plantas_v2/LULA CARDOSO AYRES/RAIZ_IMG_PH_BF_TIPO_APTO 05 51,9m².jpg',
         ambientes: [
           AmbienteData(
             titulo: 'Estar, Jantar, Terraço e Cozinha',
-            imagem: 'assets/images/areas_privativa/BLOCO F - 48 m²/RAIZ_IMG_AP_BF_0605_ESTAR, JANTAR, TERRAÇO E COZINHA.jpg',
+            imagem: 'assets/images/areas_privativa/BLOCO F - 48 m²/RAIZ_IMG_AP_BF_0605_ESTAR, JANTAR, TERRACO E COZINHA.jpg',
           ),
         ],
       ),
@@ -577,21 +521,35 @@ class PlantasView extends GetView<PlantasController> {
   List<PlantaData> _getCiceroDiasPlants() {
     return [
       PlantaData(
-        titulo: '0016 - Pavimento Tipo',
-        imagem: 'assets/images/plantas_v2/CÍCERO DIAS/RAIZ_IMG_PH_BH_0016_PAV. TIPO.png',
+        titulo: 'Pavimento Tipo',
+        imagem: 'assets/images/plantas_v2/CÍCERO DIAS/RAIZ_IMG_PH_BH_0016_PAV. TIPO.jpg',
       ),
       PlantaData(
-        titulo: '0017 - Pavimento Tipo Cobertura',
-        imagem: 'assets/images/plantas_v2/CÍCERO DIAS/RAIZ_IMG_PH_BH_0017_PAV. TIPO COBERTURA.png',
+        titulo: 'Pavimento Tipo Cobertura',
+        imagem: 'assets/images/plantas_v2/CÍCERO DIAS/RAIZ_IMG_PH_BH_0017_PAV. TIPO COBERTURA.jpg',
       ),
       PlantaData(
-        titulo: 'Tipo Apto 01',
+        titulo: 'Apto Tipo - Terminação 01',
         area: '74m²',
-        imagem: 'assets/images/plantas_v2/CÍCERO DIAS/RAIZ_IMG_PH_BH_TIPO_APTO 01 74m².png',
+        imagem: 'assets/images/plantas_v2/CÍCERO DIAS/RAIZ_IMG_PH_BH_TIPO_APTO 01 74m2.jpg',
+        ambientes: [
+          AmbienteData(
+            titulo: 'Estar, Jantar, Terraço e Cozinha',
+            imagem: 'assets/images/areas_privativa/BLOCO H - 74m²/RAIZ_IMG_AP_BH_0201_ESTAR, JANTAR, TERRACO E COZINHA.jpg',
+          ),
+          AmbienteData(
+            titulo: 'Quarto Kids',
+            imagem: 'assets/images/areas_privativa/BLOCO H - 74m²/RAIZ_IMG_AP_BH_0201_QUARTO KIDS.jpg',
+          ),
+          AmbienteData(
+            titulo: 'Suíte Master',
+            imagem: 'assets/images/areas_privativa/BLOCO H - 74m²/RAIZ_IMG_AP_BH_0201_SUITE MASTER.jpg',
+          ),
+        ],
       ),
       PlantaData(
-        titulo: '3101 - Cobertura 01',
-        imagem: 'assets/images/plantas_v2/CÍCERO DIAS/RAIZ_IMG_PH_BH_3101_COBERTURA 01.png',
+        titulo: 'Cobertura 01',
+        imagem: 'assets/images/plantas_v2/CÍCERO DIAS/RAIZ_IMG_PH_BH_3101_COBERTURA 01.jpg',
       ),
     ];
   }
@@ -600,14 +558,14 @@ class PlantasView extends GetView<PlantasController> {
 class PlantaData {
   final String titulo;
   final String? area;
-  final String imagem;
+  final String? imagem;
   final List<AmbienteData> ambientes;
   final List<SubImagem>? subImagens; // Para coberturas duplex com múltiplas plantas
 
   PlantaData({
     required this.titulo,
     this.area,
-    required this.imagem,
+    this.imagem,
     this.ambientes = const [],
     this.subImagens,
   });

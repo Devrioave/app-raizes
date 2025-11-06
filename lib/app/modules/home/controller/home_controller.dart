@@ -14,7 +14,7 @@ class HomeController extends GetxController {
     try {
       final controller = VideoPlayerController.asset('assets/videos/video_inicial.mp4');
       await controller.initialize();
-      controller.setLooping(true);
+      controller.setLooping(false); // Vídeo para após executar
       controller.setVolume(0.0); // Remove o áudio do vídeo
       controller.play();
       videoController.value = controller;

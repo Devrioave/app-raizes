@@ -20,16 +20,6 @@ class VideosController extends GetxController {
         isAvailable: true,
         videoUrl: 'https://www.youtube.com/watch?v=xywfgKlpX4o',
       ),
-      VideoItem(
-        title: "Tour Virtual Apple Vision",
-        description: "Experiência imersiva em realidade virtual",
-        isAvailable: false,
-      ),
-      VideoItem(
-        title: "Sala Imersiva",
-        description: "Ambiente interativo do projeto",
-        isAvailable: false,
-      ),
     ];
   }
 

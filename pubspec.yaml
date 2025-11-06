@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionStrsing while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.20+25
+version: 1.0.23+28
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -93,21 +93,17 @@ flutter:
     - assets/images/pattern4.png
     - assets/images/pattern5.png
     - assets/images/city.jpg
-    - assets/images/seguranca_e_conforto.png
-    - assets/images/sustentabilidade.png
-    - assets/images/tecnologia.png
+    - assets/images/seguranca_e_conforto.jpg
+    - assets/images/sustentabilidade.jpg
+    - assets/images/tecnologia.jpg
     - assets/3.0x/Localizacao.jpg
     - assets/images/icones/
-    - assets/images/plantas/GERAL/
-    - assets/images/plantas/BLOCO E/
-    - assets/images/plantas/BLOCO F/
-    - assets/images/plantas/BLOCO G/
-    - assets/images/plantas/BLOCO H/
-    - assets/images/plantas/BLOCO I/
     - assets/images/plantas_v2/GILVAN SAMICO/
+    - assets/images/plantas_v2/GILVAN SAMICO - PAVIMENTOS/
     - assets/images/plantas_v2/LULA CARDOSO AYRES/
     - assets/images/plantas_v2/CÍCERO DIAS/
     - assets/images/plantas_v2/GERAL/
+    - assets/images/plantas/GERAL/
     - assets/images/areas_comuns/
     - assets/images/areas_comuns_v2/
     - assets/images/projetistas/Juliano Dubeux - Projeto Urbanístico/Fotos/

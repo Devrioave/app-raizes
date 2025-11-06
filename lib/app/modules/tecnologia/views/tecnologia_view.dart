@@ -114,7 +114,7 @@ class TecnologiaView extends GetView<TecnologiaController> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               image: const DecorationImage(
-                image: AssetImage('assets/images/seguranca_e_conforto.png'),
+                image: AssetImage('assets/images/seguranca_e_conforto.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -147,7 +147,7 @@ class TecnologiaView extends GetView<TecnologiaController> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               image: const DecorationImage(
-                image: AssetImage('assets/images/sustentabilidade.png'),
+                image: AssetImage('assets/images/sustentabilidade.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -179,7 +179,7 @@ class TecnologiaView extends GetView<TecnologiaController> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               image: const DecorationImage(
-                image: AssetImage('assets/images/tecnologia.png'),
+                image: AssetImage('assets/images/tecnologia.jpg'),
                 fit: BoxFit.cover,
               ),
             ),

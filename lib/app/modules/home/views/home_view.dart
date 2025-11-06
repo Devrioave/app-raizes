@@ -24,23 +24,27 @@ class HomeView extends GetView<HomeController> {
       ),
       body: Stack(
         children: [
-          // Vídeo de fundo
-          Obx(() {
-            final videoController = controller.videoController.value;
-            if (videoController != null && videoController.value.isInitialized) {
-              return SizedBox.expand(
-                child: FittedBox(
+          // Vídeo de fundo - posicionado entre as barras
+          Positioned(
+            top: 80, // Altura da barra superior
+            bottom: 80, // Altura da barra inferior
+            left: 0,
+            right: 0,
+            child: Obx(() {
+              final videoController = controller.videoController.value;
+              if (videoController != null && videoController.value.isInitialized) {
+                return FittedBox(
                   fit: BoxFit.cover,
                   child: SizedBox(
                     width: videoController.value.size.width,
                     height: videoController.value.size.height,
                     child: VideoPlayer(videoController),
                   ),
-                ),
-              );
-            }
-            return Container(color: Colors.black);
-          }),
+                );
+              }
+              return Container(color: Colors.black);
+            }),
+          ),
 
           // Header com menu e logo RAIZES
           Positioned(
@@ -49,7 +53,7 @@ class HomeView extends GetView<HomeController> {
             right: 0,
             child: SafeArea(
               child: Container(
-                height: 100,
+                height: 80,
                 decoration: const BoxDecoration(
                   color: Color(0xFF5D7052),
                 ),
@@ -58,7 +62,7 @@ class HomeView extends GetView<HomeController> {
                   children: [
                     // Menu hamburger
                     IconButton(
-                      icon: const Icon(Icons.menu, color: Colors.white, size: 28),
+                      icon: const Icon(Icons.menu, color: Colors.white, size: 24),
                       onPressed: () {
                         scaffoldKey.currentState?.openDrawer();
                       },
@@ -69,7 +73,7 @@ class HomeView extends GetView<HomeController> {
                       child: Center(
                         child: Image.asset(
                           'assets/images/Marca-home.png',
-                          height: 45,
+                          height: 35,
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -77,7 +81,7 @@ class HomeView extends GetView<HomeController> {
 
                     // Ícone de play
                     IconButton(
-                      icon: const Icon(Icons.play_circle_outline, color: Colors.white, size: 32),
+                      icon: const Icon(Icons.play_circle_outline, color: Colors.white, size: 28),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -118,14 +122,14 @@ class HomeView extends GetView<HomeController> {
             left: 0,
             right: 0,
             child: Container(
-              height: 120,
+              height: 80,
               decoration: const BoxDecoration(
                 color: Color(0xFF5D7052),
               ),
               child: Center(
                 child: Image.asset(
                   'assets/images/Marca-rio-ave.png',
-                  height: 50,
+                  height: 40,
                   fit: BoxFit.contain,
                 ),
               ),

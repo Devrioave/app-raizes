@@ -5,8 +5,9 @@ import 'package:raizes/app/modules/areas_comuns/models/area_comum.dart';
 import 'package:raizes/app/themes/app_themes.dart';
 
 class AreaImagesView extends StatefulWidget {
-  const AreaImagesView({Key? key, this.initialImgPath}) : super(key: key);
+  const AreaImagesView({Key? key, this.initialImgPath, this.initialLocalNumber}) : super(key: key);
   final String? initialImgPath;
+  final int? initialLocalNumber;
 
   @override
   State<AreaImagesView> createState() => _AreaImagesViewState();
@@ -34,17 +35,26 @@ class _AreaImagesViewState extends State<AreaImagesView> {
     allLocais.removeWhere((local) => local.imgPath == null);
 
     // Remover duplicatas de imagens (ex: 3 bicicletários com mesma imagem)
-    final seenImages = <String>{};
+    // mas manter áreas com descrições diferentes mesmo que tenham a mesma imagem
+    final seenEntries = <String>{};
     locais = allLocais.where((local) {
-      if (seenImages.contains(local.imgPath)) {
+      // Criar uma chave única combinando imagem + descrição
+      final key = '${local.imgPath}_${local.description}';
+      if (seenEntries.contains(key)) {
         return false;
       }
-      seenImages.add(local.imgPath!);
+      seenEntries.add(key);
       return true;
     }).toList();
 
-    // Encontrar índice inicial
-    var initialImgIndex = locais.indexWhere((local) => local.imgPath == widget.initialImgPath);
+    // Encontrar índice inicial - priorizar pelo número do local se disponível
+    int initialImgIndex = 0;
+    if (widget.initialLocalNumber != null) {
+      initialImgIndex = locais.indexWhere((local) => local.number == widget.initialLocalNumber);
+    }
+    if (initialImgIndex == -1 && widget.initialImgPath != null) {
+      initialImgIndex = locais.indexWhere((local) => local.imgPath == widget.initialImgPath);
+    }
     if (initialImgIndex == -1) initialImgIndex = 0;
 
     currentIndex = initialImgIndex;
